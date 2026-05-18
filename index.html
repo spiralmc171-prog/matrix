@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="description" content="MATRIX ROLEPLAY - The Next Generation SA-MP Roleplay Experience."/>
+<title>MATRIX ROLEPLAY | MXRP — Next Gen SA-MP Experience</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
+<style>
+:root{
+  --blue:#0077ff;
+  --blue2:#33aaff;
+  --navy:#001f6b;
+  --neon:#00b3ff;
+  --dark:#020510;
+  --dark2:#050c1a;
+  --dark3:#091220;
+  --glass:rgba(0,119,255,0.05);
+  --glass2:rgba(255,255,255,0.04);
+  --border:rgba(0,119,255,0.28);
+  --white:#eef4ff;
+  --gray:#778899;
+  --font-head:'Orbitron',sans-serif;
+  --font-body:'Rajdhani',sans-serif;
+  --font-mono:'Share Tech Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--dark);color:var(--white);font-family:var(--font-body);font-size:16px;overflow-x:hidden;cursor:none;}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--dark2);}
+::-webkit-scrollbar-thumb{background:var(--blue);border-radius:3px;}
+
+/* CURSOR */
+#cursor{position:fixed;width:11px;height:11px;background:var(--neon);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:transform 0.08s;box-shadow:0 0 14px var(--neon),0 0 28px var(--neon);}
+#cursor-ring{position:fixed;width:34px;height:34px;border:1px solid var(--blue);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:all 0.15s ease;opacity:0.6;}
+
+/* LOADER */
+#loader{position:fixed;inset:0;background:var(--dark);z-index:100000;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 0.8s ease;}
+#loader.hide{opacity:0;pointer-events:none;}
+.loader-logo{width:130px;animation:loaderPulse 1.5s ease-in-out infinite;}
+.loader-bar-wrap{width:280px;height:3px;background:rgba(255,255,255,0.07);border-radius:2px;margin-top:30px;overflow:hidden;}
+.loader-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--navy),var(--neon));border-radius:2px;animation:loadBar 2.2s ease forwards;}
+.loader-text{font-family:var(--font-mono);font-size:11px;color:var(--blue2);margin-top:14px;letter-spacing:4px;animation:blink 1s step-end infinite;}
+@keyframes loaderPulse{0%,100%{filter:drop-shadow(0 0 8px var(--neon));}50%{filter:drop-shadow(0 0 24px var(--neon)) drop-shadow(0 0 48px var(--blue));}}
+@keyframes loadBar{0%{width:0%}100%{width:100%}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* PARTICLES */
+#particles-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+
+/* NAVBAR */
+#navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:14px 40px;display:flex;align-items:center;justify-content:space-between;transition:all 0.4s ease;background:transparent;}
+#navbar.scrolled{background:rgba(2,5,16,0.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:10px 40px;}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--blue);box-shadow:0 0 12px var(--neon);}
+.nav-brand{font-family:var(--font-head);font-size:14px;font-weight:700;color:var(--white);letter-spacing:2px;}
+.nav-brand span{color:var(--blue2);}
+.nav-links{display:flex;align-items:center;gap:2px;}
+.nav-links a{font-family:var(--font-body);font-size:11px;font-weight:600;color:#7799bb;text-decoration:none;padding:7px 9px;letter-spacing:1.5px;text-transform:uppercase;position:relative;transition:color 0.3s;}
+.nav-links a::after{content:'';position:absolute;bottom:2px;left:50%;width:0;height:1px;background:var(--neon);transition:all 0.3s;transform:translateX(-50%);}
+.nav-links a:hover{color:var(--white);}
+.nav-links a:hover::after{width:80%;}
+.nav-discord{background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff!important;border-radius:4px;padding:7px 15px!important;box-shadow:0 0 14px rgba(0,119,255,0.4);}
+.nav-discord:hover{box-shadow:0 0 28px rgba(0,179,255,0.7)!important;}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;}
+.hamburger span{display:block;width:24px;height:2px;background:var(--blue);transition:all 0.3s;border-radius:1px;}
+.mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(2,5,16,0.98);backdrop-filter:blur(30px);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:28px;}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{font-family:var(--font-head);font-size:18px;color:var(--white);text-decoration:none;letter-spacing:3px;text-transform:uppercase;transition:color 0.3s;}
+.mobile-menu a:hover{color:var(--blue2);}
+.mobile-close{position:absolute;top:20px;right:24px;font-size:28px;color:var(--blue2);cursor:pointer;font-family:var(--font-head);}
+
+/* HERO */
+#hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background-image:url('https://cdn.discordapp.com/attachments/1431595154736808011/1504944608730284142/d8dbde36106b042b6687f9a2be836dce.jpg?ex=6a08d463&is=6a0782e3&hm=65d2a5e4ca2950905b769ab6be56d4d8a4bc0bdd2b23f5eb7672b18a20370c5c&');background-size:cover;background-position:center;animation:bgPan 20s ease-in-out infinite alternate;}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(2,5,16,0.5) 0%,rgba(2,5,16,0.7) 50%,rgba(2,5,16,1) 100%);}
+@keyframes bgPan{0%{transform:scale(1) translateX(0);}100%{transform:scale(1.08) translateX(-20px);}}
+.hero-content{position:relative;z-index:2;max-width:900px;padding:0 20px;}
+.hero-logo{width:140px;height:140px;border-radius:50%;object-fit:cover;border:3px solid var(--blue);box-shadow:0 0 30px var(--neon),0 0 60px rgba(0,119,255,0.3);margin-bottom:28px;animation:heroPulse 3s ease-in-out infinite;}
+@keyframes heroPulse{0%,100%{box-shadow:0 0 30px var(--neon),0 0 60px rgba(0,119,255,0.3);}50%{box-shadow:0 0 50px var(--neon),0 0 100px rgba(0,179,255,0.5),0 0 150px rgba(0,119,255,0.15);}}
+.hero-tag{font-family:var(--font-mono);font-size:12px;color:var(--blue2);letter-spacing:6px;text-transform:uppercase;margin-bottom:14px;animation:fadeUp 0.8s ease 0.3s both;}
+.hero-title{font-family:var(--font-head);font-size:clamp(30px,6vw,70px);font-weight:900;color:var(--white);letter-spacing:4px;line-height:1.05;margin-bottom:16px;animation:fadeUp 0.8s ease 0.5s both;}
+.hero-title span{color:var(--blue2);text-shadow:0 0 20px var(--neon),0 0 40px var(--neon);}
+.hero-subtitle{font-size:clamp(14px,2.5vw,19px);color:#8899bb;letter-spacing:2px;margin-bottom:40px;animation:fadeUp 0.8s ease 0.7s both;}
+.hero-typing{color:var(--blue2);font-family:var(--font-mono);}
+.hero-btns{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;animation:fadeUp 0.8s ease 0.9s both;}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 30px;border-radius:4px;font-family:var(--font-head);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;transition:all 0.3s ease;position:relative;overflow:hidden;}
+.btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent,rgba(255,255,255,0.08),transparent);transform:translateX(-100%);transition:transform 0.5s ease;}
+.btn:hover::before{transform:translateX(100%);}
+.btn-primary{background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;box-shadow:0 0 18px rgba(0,119,255,0.4);}
+.btn-primary:hover{box-shadow:0 0 36px rgba(0,179,255,0.7),0 0 70px rgba(0,119,255,0.3);transform:translateY(-2px);}
+.btn-outline{background:transparent;color:var(--white);border:1px solid var(--border);}
+.btn-outline:hover{border-color:var(--blue);color:var(--blue2);box-shadow:0 0 18px rgba(0,119,255,0.25);transform:translateY(-2px);}
+.scroll-indicator{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;z-index:2;animation:fadeUp 1s ease 1.2s both;}
+.scroll-indicator span{font-family:var(--font-mono);font-size:10px;color:var(--gray);letter-spacing:3px;}
+.scroll-arrow{width:22px;height:22px;border-right:1px solid var(--blue);border-bottom:1px solid var(--blue);transform:rotate(45deg);animation:bounce 1.5s ease-in-out infinite;}
+@keyframes bounce{0%,100%{transform:rotate(45deg) translateY(0);}50%{transform:rotate(45deg) translateY(8px);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+
+/* COMMON SECTION */
+section{position:relative;z-index:1;}
+.section-pad{padding:100px 60px;}
+.section-header{text-align:center;margin-bottom:70px;}
+.section-label{font-family:var(--font-mono);font-size:11px;color:var(--blue2);letter-spacing:6px;text-transform:uppercase;margin-bottom:12px;}
+.section-title{font-family:var(--font-head);font-size:clamp(24px,4vw,46px);font-weight:800;color:var(--white);letter-spacing:3px;line-height:1.1;}
+.section-title span{color:var(--blue2);}
+.section-line{width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--blue),transparent);margin:20px auto 0;}
+.section-desc{font-size:17px;color:#6688aa;max-width:700px;margin:20px auto 0;line-height:1.8;}
+.glitch-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--blue),transparent);}
+
+/* ABOUT */
+#about{background:linear-gradient(180deg,var(--dark) 0%,var(--dark2) 100%);}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+.about-img-wrap{position:relative;}
+.about-img-wrap img{width:100%;border-radius:8px;border:1px solid var(--border);filter:brightness(0.85);}
+.about-img-wrap::before{content:'';position:absolute;inset:-1px;border-radius:8px;background:linear-gradient(135deg,var(--blue),transparent 60%);z-index:-1;opacity:0.4;}
+.about-text p{font-size:17px;color:#7799aa;line-height:1.9;margin-bottom:20px;}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px;}
+.stat-card{background:var(--glass);border:1px solid var(--border);border-radius:8px;padding:22px 16px;text-align:center;backdrop-filter:blur(10px);transition:all 0.3s;}
+.stat-card:hover{border-color:var(--blue2);box-shadow:0 0 20px rgba(0,119,255,0.2);}
+.stat-num{font-family:var(--font-head);font-size:26px;font-weight:900;color:var(--blue2);text-shadow:0 0 14px var(--neon);}
+.stat-label{font-size:11px;color:#556677;letter-spacing:1px;margin-top:5px;}
+
+/* FEATURES */
+#features{background:var(--dark2);}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:22px;}
+.feat-card{background:var(--glass2);border:1px solid rgba(255,255,255,0.05);border-radius:8px;padding:28px 22px;transition:all 0.35s;position:relative;overflow:hidden;}
+.feat-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--blue),transparent);transform:scaleX(0);transition:transform 0.4s;}
+.feat-card:hover::before{transform:scaleX(1);}
+.feat-card:hover{border-color:var(--border);transform:translateY(-6px);box-shadow:0 18px 38px rgba(0,0,0,0.5),0 0 18px rgba(0,119,255,0.1);}
+.feat-icon{font-size:30px;color:var(--blue2);margin-bottom:14px;filter:drop-shadow(0 0 7px var(--neon));}
+.feat-title{font-family:var(--font-head);font-size:12px;font-weight:700;color:var(--white);letter-spacing:1.5px;margin-bottom:10px;}
+.feat-desc{font-size:14px;color:#556677;line-height:1.7;}
+
+/* FACTIONS */
+#factions{background:var(--dark);}
+.factions-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:26px;}
+.faction-card{background:var(--glass2);border:1px solid rgba(255,255,255,0.05);border-radius:10px;padding:34px 26px;text-align:center;transition:all 0.35s;position:relative;overflow:hidden;}
+.faction-card::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(0,119,255,0.08),transparent 60%);opacity:0;transition:opacity 0.4s;}
+.faction-card:hover::after{opacity:1;}
+.faction-card:hover{border-color:var(--border);transform:translateY(-8px);box-shadow:0 22px 48px rgba(0,0,0,0.5),0 0 28px rgba(0,119,255,0.14);}
+.faction-icon{width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,var(--navy),rgba(0,119,255,0.35));display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;margin:0 auto 18px;border:2px solid var(--border);}
+.faction-name{font-family:var(--font-head);font-size:13px;font-weight:700;color:var(--white);letter-spacing:2px;margin-bottom:10px;}
+.faction-desc{font-size:14px;color:#556677;line-height:1.7;margin-bottom:18px;}
+
+/* GANG */
+#gangs{background:linear-gradient(135deg,var(--dark2) 0%,rgba(0,30,100,0.18) 50%,var(--dark2) 100%);}
+.gang-features{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px;margin-bottom:48px;}
+.gang-feat{background:var(--glass);border:1px solid var(--border);border-radius:6px;padding:18px;text-align:center;font-size:14px;font-weight:600;color:var(--white);letter-spacing:1px;transition:all 0.3s;}
+.gang-feat i{display:block;font-size:22px;color:var(--blue2);margin-bottom:10px;}
+.gang-feat:hover{background:rgba(0,119,255,0.1);transform:scale(1.03);}
+.gang-offer{background:linear-gradient(135deg,rgba(0,20,80,0.35),rgba(0,119,255,0.08));border:1px solid var(--border);border-radius:12px;padding:40px;text-align:center;max-width:700px;margin:0 auto;}
+.gang-offer-title{font-family:var(--font-head);font-size:20px;font-weight:800;color:var(--blue2);letter-spacing:2px;margin-bottom:10px;}
+.gang-offer-sub{font-size:14px;color:#556677;margin-bottom:22px;}
+.offer-items{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:26px;}
+.offer-item{background:rgba(0,119,255,0.1);border:1px solid rgba(0,150,255,0.3);border-radius:4px;padding:7px 14px;font-family:var(--font-mono);font-size:12px;color:var(--white);}
+
+/* MEDIA */
+#media{background:var(--dark2);}
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+.gallery-item{position:relative;border-radius:8px;overflow:hidden;aspect-ratio:16/9;cursor:pointer;border:1px solid rgba(255,255,255,0.05);}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s,filter 0.5s;}
+.gallery-item:hover img{transform:scale(1.08);filter:brightness(0.65);}
+.gallery-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s;background:rgba(0,119,255,0.15);}
+.gallery-item:hover .gallery-overlay{opacity:1;}
+.gallery-overlay i{font-size:34px;color:#fff;filter:drop-shadow(0 0 10px var(--neon));}
+#lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.96);z-index:9999;display:none;align-items:center;justify-content:center;}
+#lightbox.open{display:flex;}
+#lightbox img{max-width:90vw;max-height:85vh;border-radius:4px;border:1px solid var(--border);}
+#lightbox-close{position:absolute;top:20px;right:28px;font-size:34px;color:var(--blue2);cursor:pointer;}
+
+/* STATUS */
+#status{background:var(--dark);}
+.status-panel{background:var(--glass2);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:50px;text-align:center;max-width:580px;margin:0 auto;backdrop-filter:blur(20px);}
+.status-dot{width:18px;height:18px;background:#00ff88;border-radius:50%;margin:0 auto 20px;animation:statusPulse 2s ease-in-out infinite;}
+@keyframes statusPulse{0%,100%{box-shadow:0 0 10px #00ff88,0 0 20px #00ff88;}50%{box-shadow:0 0 25px #00ff88,0 0 50px #00ff88,0 0 70px rgba(0,255,136,0.4);}}
+.status-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,255,136,0.08);border:1px solid rgba(0,255,136,0.4);border-radius:50px;padding:8px 22px;font-family:var(--font-mono);font-size:13px;color:#00ff88;margin-bottom:18px;}
+
+/* STORE */
+#store{background:var(--dark2);}
+.store-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:22px;}
+.store-card{background:var(--glass2);border:1px solid rgba(255,255,255,0.05);border-radius:10px;padding:26px 20px;text-align:center;transition:all 0.35s;}
+.store-card:hover{border-color:var(--border);transform:translateY(-6px);box-shadow:0 18px 38px rgba(0,0,0,0.4),0 0 18px rgba(0,119,255,0.1);}
+.store-icon{font-size:34px;color:var(--blue2);margin-bottom:13px;filter:drop-shadow(0 0 8px var(--neon));}
+.store-name{font-family:var(--font-head);font-size:12px;font-weight:700;color:var(--white);letter-spacing:1.5px;margin-bottom:7px;}
+.store-price{font-family:var(--font-mono);font-size:17px;color:var(--blue2);margin-bottom:16px;}
+
+/* STAFF */
+#staff{background:var(--dark);}
+.staff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-bottom:40px;max-width:700px;margin-left:auto;margin-right:auto;}
+.staff-card{background:var(--glass2);border:1px solid rgba(255,255,255,0.05);border-radius:10px;padding:30px 20px;text-align:center;transition:all 0.35s;position:relative;overflow:hidden;}
+.staff-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--blue),transparent);}
+.staff-card:hover{border-color:var(--border);transform:translateY(-6px);box-shadow:0 18px 38px rgba(0,0,0,0.5),0 0 22px rgba(0,119,255,0.12);}
+.staff-avatar{width:76px;height:76px;border-radius:50%;background:linear-gradient(135deg,var(--navy),rgba(0,119,255,0.4));display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:26px;font-weight:700;color:#fff;margin:0 auto 14px;border:2px solid var(--border);}
+.staff-name{font-family:var(--font-head);font-size:14px;font-weight:700;color:var(--white);letter-spacing:2px;margin-bottom:5px;}
+.staff-role{font-family:var(--font-mono);font-size:10px;color:var(--blue2);letter-spacing:2px;margin-bottom:8px;}
+.staff-badge{display:inline-block;background:rgba(0,119,255,0.1);border:1px solid rgba(0,150,255,0.25);border-radius:50px;padding:3px 12px;font-size:11px;color:#557799;}
+
+/* GROUP CARD — MATRIX MC */
+.group-card{background:var(--glass2);border:1px solid var(--border);border-radius:14px;padding:36px 42px;position:relative;overflow:hidden;margin-top:0;}
+.group-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--neon),var(--blue),transparent);}
+.group-card-header{display:flex;align-items:center;gap:22px;margin-bottom:32px;}
+.group-icon{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--blue));display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;border:2px solid var(--border);flex-shrink:0;box-shadow:0 0 18px rgba(0,119,255,0.35);}
+.group-title{font-family:var(--font-head);font-size:20px;font-weight:800;color:var(--white);letter-spacing:3px;margin-bottom:5px;}
+.group-sub{font-family:var(--font-mono);font-size:11px;color:var(--blue2);letter-spacing:2px;}
+.group-members{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:16px;}
+.group-member{background:rgba(0,119,255,0.06);border:1px solid rgba(0,119,255,0.18);border-radius:10px;padding:18px 14px;text-align:center;transition:all 0.3s;}
+.group-member:hover{border-color:var(--border);background:rgba(0,119,255,0.12);transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,0.4),0 0 14px rgba(0,119,255,0.15);}
+.gm-avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--navy),rgba(0,119,255,0.5));display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:18px;font-weight:700;color:#fff;margin:0 auto 10px;border:1px solid var(--border);}
+.gm-name{font-family:var(--font-head);font-size:11px;font-weight:700;color:var(--white);letter-spacing:1.5px;margin-bottom:4px;}
+.gm-tag{font-family:var(--font-mono);font-size:10px;color:#446688;}
+
+/* RULES */
+#rules{background:var(--dark2);}
+.rules-categories{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:18px;}
+.accordion{background:var(--glass2);border:1px solid rgba(255,255,255,0.05);border-radius:8px;overflow:hidden;}
+.accordion-header{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;cursor:pointer;transition:background 0.3s;}
+.accordion-header:hover{background:rgba(0,119,255,0.07);}
+.accordion-header h3{font-family:var(--font-head);font-size:12px;font-weight:700;color:var(--white);letter-spacing:2px;}
+.accordion-arrow{color:var(--blue2);transition:transform 0.3s;font-size:13px;}
+.accordion.open .accordion-arrow{transform:rotate(180deg);}
+.accordion-body{max-height:0;overflow:hidden;transition:max-height 0.4s ease;}
+.accordion.open .accordion-body{max-height:500px;}
+.accordion-body ul{padding:0 22px 18px;list-style:none;}
+.accordion-body ul li{font-size:14px;color:#556677;line-height:1.8;padding:3px 0 3px 16px;position:relative;}
+.accordion-body ul li::before{content:'▸';position:absolute;left:0;color:var(--blue2);}
+
+/* APPLY */
+#apply{background:var(--dark);}
+.apply-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:26px;}
+.apply-card{background:var(--glass2);border:1px solid rgba(255,255,255,0.05);border-radius:10px;padding:34px 26px;text-align:center;transition:all 0.35s;}
+.apply-card:hover{border-color:var(--border);transform:translateY(-6px);box-shadow:0 18px 38px rgba(0,0,0,0.4),0 0 22px rgba(0,119,255,0.12);}
+.apply-icon{font-size:38px;color:var(--blue2);margin-bottom:16px;filter:drop-shadow(0 0 10px var(--neon));}
+.apply-title{font-family:var(--font-head);font-size:13px;font-weight:700;color:var(--white);letter-spacing:2px;margin-bottom:10px;}
+.apply-desc{font-size:14px;color:#556677;line-height:1.7;margin-bottom:22px;}
+
+/* CONTACT */
+#contact{background:var(--dark2);}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;max-width:900px;margin:0 auto;}
+.contact-info h3{font-family:var(--font-head);font-size:20px;font-weight:700;color:var(--white);letter-spacing:2px;margin-bottom:14px;}
+.contact-info p{font-size:15px;color:#6688aa;line-height:1.8;margin-bottom:28px;}
+.social-links{display:flex;flex-direction:column;gap:14px;}
+.social-link{display:flex;align-items:center;gap:14px;padding:15px 22px;background:var(--glass2);border:1px solid rgba(255,255,255,0.05);border-radius:8px;text-decoration:none;transition:all 0.3s;}
+.social-link:hover{border-color:var(--border);transform:translateX(6px);box-shadow:0 0 18px rgba(0,119,255,0.14);}
+.social-link i{font-size:22px;color:var(--blue2);width:30px;text-align:center;}
+.social-link span{font-size:15px;font-weight:600;color:var(--white);}
+
+/* FOOTER */
+footer{background:var(--dark);border-top:1px solid var(--border);padding:58px 60px 28px;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:46px;margin-bottom:46px;}
+.footer-logo-wrap{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.footer-logo-wrap img{width:38px;height:38px;border-radius:50%;border:1px solid var(--blue);}
+.footer-logo-wrap span{font-family:var(--font-head);font-size:14px;font-weight:700;color:var(--white);letter-spacing:2px;}
+.footer-brand p{font-size:14px;color:#334455;line-height:1.8;}
+.footer-col h4{font-family:var(--font-head);font-size:11px;font-weight:700;color:var(--blue2);letter-spacing:3px;margin-bottom:16px;}
+.footer-col ul{list-style:none;}
+.footer-col ul li{margin-bottom:9px;}
+.footer-col ul li a{font-size:14px;color:#334455;text-decoration:none;transition:color 0.3s;}
+.footer-col ul li a:hover{color:var(--white);}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.04);padding-top:22px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.footer-bottom p{font-size:12px;color:#334455;font-family:var(--font-mono);}
+.footer-socials{display:flex;gap:10px;}
+.footer-socials a{width:34px;height:34px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--blue2);font-size:13px;text-decoration:none;transition:all 0.3s;}
+.footer-socials a:hover{background:var(--blue);color:#fff;box-shadow:0 0 14px var(--neon);}
+
+/* TOAST */
+#toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:rgba(0,119,255,0.14);border:1px solid var(--border);border-radius:6px;padding:13px 26px;font-family:var(--font-mono);font-size:12px;color:var(--white);z-index:99999;opacity:0;transition:all 0.4s ease;pointer-events:none;}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.94);z-index:9990;backdrop-filter:blur(10px);}
+.modal-overlay.open{display:flex;align-items:center;justify-content:center;}
+.modal-box{background:var(--dark2);border:1px solid var(--border);border-radius:12px;padding:46px;max-width:580px;width:90%;text-align:center;position:relative;animation:modalIn 0.35s ease;}
+@keyframes modalIn{from{transform:scale(0.9);opacity:0;}to{transform:scale(1);opacity:1;}}
+.modal-close{position:absolute;top:16px;right:20px;font-size:22px;color:var(--blue2);cursor:pointer;}
+.modal-icon{font-size:48px;color:var(--blue2);margin-bottom:18px;filter:drop-shadow(0 0 14px var(--neon));}
+.modal-title{font-family:var(--font-head);font-size:18px;font-weight:700;color:var(--white);letter-spacing:2px;margin-bottom:20px;}
+.modal-steps{text-align:left;margin-bottom:26px;}
+.modal-step{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+.modal-step:last-child{border-bottom:none;}
+.step-num{min-width:26px;height:26px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:11px;font-weight:700;color:#fff;flex-shrink:0;}
+.step-text{font-size:14px;color:#7799aa;line-height:1.7;}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .section-pad{padding:80px 36px;}
+  .about-grid{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  .contact-grid{grid-template-columns:1fr;}
+  .staff-grid{grid-template-columns:repeat(3,1fr);max-width:100%;}
+}
+@media(max-width:768px){
+  #navbar{padding:12px 18px;}
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  .section-pad{padding:64px 18px;}
+  footer{padding:46px 18px 22px;}
+  .footer-grid{grid-template-columns:1fr;}
+  .footer-bottom{flex-direction:column;text-align:center;}
+  .hero-btns{flex-direction:column;align-items:center;}
+  .btn{width:240px;justify-content:center;}
+  .stats-grid{grid-template-columns:1fr 1fr;}
+  .staff-grid{grid-template-columns:1fr 1fr;}
+  .group-card{padding:24px 18px;}
+  .group-card-header{flex-direction:column;text-align:center;}
+}
+@media(max-width:480px){
+  .staff-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- PARTICLES -->
+<canvas id="particles-canvas"></canvas>
+
+<!-- LOADER -->
+<div id="loader">
+  <img class="loader-logo" src="https://cdn.discordapp.com/attachments/1431595154736808011/1504944128935465142/IMG_2289.gif?ex=6a08d3f0&is=6a078270&hm=8944b350ab0fc233475d83b963496cb785e5fb9e37086db690abb675681b36bf&" alt="MXRP"/>
+  <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+  <div class="loader-text">INITIALIZING MATRIX...</div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">
+    <img src="https://cdn.discordapp.com/attachments/1431595154736808011/1504944128935465142/IMG_2289.gif?ex=6a08d3f0&is=6a078270&hm=8944b350ab0fc233475d83b963496cb785e5fb9e37086db690abb675681b36bf&" alt="MXRP"/>
+    <div class="nav-brand">MATRIX<span>RP</span></div>
+  </a>
+  <div class="nav-links">
+    <a href="#hero">Home</a>
+    <a href="#about">About</a>
+    <a href="#features">Features</a>
+    <a href="#factions">Factions</a>
+    <a href="#gangs">Gangs</a>
+    <a href="#media">Media</a>
+    <a href="#store">Store</a>
+    <a href="#staff">Staff</a>
+    <a href="#rules">Rules</a>
+    <a href="#status">Status</a>
+    <a href="#apply">Apply</a>
+    <a href="#contact">Contact</a>
+    <a href="https://discord.gg/uJ63XZR3X6" target="_blank" class="nav-discord">Discord</a>
+  </div>
+  <div class="hamburger" onclick="toggleMobile()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <span class="mobile-close" onclick="toggleMobile()">✕</span>
+  <a href="#hero" onclick="toggleMobile()">Home</a>
+  <a href="#about" onclick="toggleMobile()">About</a>
+  <a href="#features" onclick="toggleMobile()">Features</a>
+  <a href="#factions" onclick="toggleMobile()">Factions</a>
+  <a href="#gangs" onclick="toggleMobile()">Gangs</a>
+  <a href="#media" onclick="toggleMobile()">Media</a>
+  <a href="#store" onclick="toggleMobile()">Store</a>
+  <a href="#staff" onclick="toggleMobile()">Staff</a>
+  <a href="#rules" onclick="toggleMobile()">Rules</a>
+  <a href="#status" onclick="toggleMobile()">Status</a>
+  <a href="#apply" onclick="toggleMobile()">Apply</a>
+  <a href="#contact" onclick="toggleMobile()">Contact</a>
+  <a href="https://discord.gg/uJ63XZR3X6" target="_blank" style="color:var(--blue2)">Discord</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <img class="hero-logo" src="https://cdn.discordapp.com/attachments/1431595154736808011/1504944128935465142/IMG_2289.gif?ex=6a08d3f0&is=6a078270&hm=8944b350ab0fc233475d83b963496cb785e5fb9e37086db690abb675681b36bf&" alt="MATRIX ROLEPLAY"/>
+    <div class="hero-tag">SA-MP Roleplay Community</div>
+    <h1 class="hero-title">WELCOME TO <span>MATRIX</span><br/>ROLEPLAY</h1>
+    <p class="hero-subtitle">The Next Generation SA-MP Roleplay Experience<br/><span class="hero-typing" id="typing-text"></span></p>
+    <div class="hero-btns">
+      <a href="https://discord.gg/uJ63XZR3X6" target="_blank" class="btn btn-primary"><i class="fab fa-discord"></i> JOIN DISCORD</a>
+      <a href="#" onclick="openModal('whitelist');return false;" class="btn btn-primary"><i class="fas fa-clipboard-list"></i> WHITELIST</a>
+      <a href="https://www.instagram.com/reel/DYWPNWxP-T7/" target="_blank" class="btn btn-outline"><i class="fas fa-play"></i> WATCH TRAILER</a>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <span>SCROLL</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<div class="glitch-divider"></div>
+
+<!-- ABOUT -->
+<section id="about" class="section-pad">
+  <div class="section-header" data-aos="fade-up">
+    <div class="section-label">About Us</div>
+    <h2 class="section-title">WHAT IS <span>MATRIX</span> ROLEPLAY?</h2>
+    <div class="section-line"></div>
+    <p class="section-desc">MATRIX ROLEPLAY delivers realistic, immersive, and high-quality SA-MP roleplay with advanced systems, custom mapping, active staff, unique gangs, realistic economy, and intense roleplay experiences.</p>
+  </div>
+  <div class="about-grid">
+    <div class="about-img-wrap" data-aos="fade-right">
+      <img src="https://cdn.discordapp.com/attachments/1431595155156373536/1504967342549893140/IMG_20260419_232852.jpg?ex=6a08e98f&is=6a07980f&hm=32ba2b5dad695022dca6026661ef75e42ec4d2872b34afb97982b9eaa9a690bd&" alt="MXRP"/>
+    </div>
+    <div class="about-text" data-aos="fade-left">
+      <p>Step into a world where every decision shapes your story. MATRIX ROLEPLAY is not just a server — it's an entire universe built for serious roleplayers who crave depth, realism, and community.</p>
+      <p>From the gritty streets controlled by ruthless gangs to the halls of power maintained by law enforcement, every corner of our world is crafted for immersive storytelling.</p>
+      <div class="stats-grid">
+        <div class="stat-card" data-aos="zoom-in" data-aos-delay="100">
+          <div class="stat-num">24/7</div>
+          <div class="stat-label">Server Uptime</div>
+        </div>
+        <div class="stat-card" data-aos="zoom-in" data-aos-delay="200">
+          <div class="stat-num" data-target="200">0</div>
+          <div class="stat-label">Custom Mappings</div>
+        </div>
+        <div class="stat-card" data-aos="zoom-in" data-aos-delay="300">
+          <div class="stat-num" data-target="50">0</div>
+          <div class="stat-label">Advanced Systems</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glitch-divider"></div>
+
+<!-- FEATURES -->
+<section id="features" class="section-pad">
+  <div class="section-header" data-aos="fade-up">
+    <div class="section-label">Why Choose Us</div>
+    <h2 class="section-title">SERVER <span>FEATURES</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="features-grid">
+    <div class="feat-card" data-aos="fade-up" data-aos-delay="50"><div class="feat-icon"><i class="fas fa-theater-masks"></i></div><div class="feat-title">Advanced Roleplay Systems</div><div class="feat-desc">Deep, immersive RP mechanics for serious players.</div></div>
+    <div class="feat-card" data-aos="fade-up" data-aos-delay="100"><div class="feat-icon"><i class="fas fa-coins"></i></div><div class="feat-title">Realistic Economy</div><div class="feat-desc">Dynamic market and player-driven businesses.</div></div>
+    <div class="feat-card" data-aos="fade-up" data-aos-delay="150"><div class="feat-icon"><i class="fas fa-car"></i></div><div class="feat-title">Custom Vehicles</div><div class="feat-desc">Hundreds of custom vehicles with unique handling.</div></div>
+    <div class="feat-card" data-aos="fade-up" data-aos-delay="200"><div class="feat-icon"><i class="fas fa-home"></i></div><div class="feat-title">Custom Houses</div><div class="feat-desc">Buy, furnish and live in customizable properties.</div></div>
+    <div class="feat-card" data-aos="fade-up" data-aos-delay="250"><div class="feat-icon"><i class="fas fa-fist-raised"></i></div><div class="feat-title">Gang System</div><div class="feat-desc">Turf wars, gang houses and underground operations.</div></div>
+    <div class="feat-card" data-aos="fade-up" data-aos-delay="300"><div class="feat-icon"><i class="fas fa-shield-alt"></i></div><div class="feat-title">Faction System</div><div class="feat-desc">Join official factions with ranks and rewards.</div></div>
+    <div class="feat-card" data-aos="fade-up" data-aos-delay="350"><div class="feat-icon"><i class="fas fa-briefcase"></i></div><div class="feat-title">Jobs & Businesses</div><div class="feat-desc">Diverse legal and illegal career paths.</div></div>
+    <div class="feat-card" data-aos="fade-up" data-aos-delay="400"><div class="feat-icon"><i class="fas fa-mobile-alt"></i></div><div class="feat-title">Phone System</div><div class="feat-desc">In-game phone with contacts, apps and messaging.</div></div>
+    <div class="feat-card" data-aos="fade-up" data-aos-delay="50"><div class="feat-icon"><i class="fas fa-hammer"></i></div><div class="feat-title">Weapon Crafting</div><div class="feat-desc">Craft and customize weapons via black market.</div></div>
+    <div class="feat-card" data-aos="fade-up" data-aos-delay="100"><div class="feat-icon"><i class="fas fa-pills"></i></div><div class="feat-title">Drug System</div><div class="feat-desc">Full drug production, distribution and trade.</div></div>
+    <div class="feat-card" data-aos="fade-up" data-aos-delay="150"><div class="feat-icon"><i class="fas fa-gift"></i></div><div class="feat-title">Events & Giveaways</div><div class="feat-desc">Regular events, tournaments and prizes.</div></div>
+    <div class="feat-card" data-aos="fade-up" data-aos-delay="200"><div class="feat-icon"><i class="fas fa-bolt"></i></div><div class="feat-title">Smooth Gameplay</div><div class="feat-desc">Lag-free performance on premium hardware.</div></div>
+    <div class="feat-card" data-aos="fade-up" data-aos-delay="250"><div class="feat-icon"><i class="fas fa-lock"></i></div><div class="feat-title">Anti-Cheat</div><div class="feat-desc">Advanced detection keeping gameplay fair.</div></div>
+    <div class="feat-card" data-aos="fade-up" data-aos-delay="300"><div class="feat-icon"><i class="fas fa-map-marked-alt"></i></div><div class="feat-title">Custom Interiors</div><div class="feat-desc">Unique interiors for businesses and hideouts.</div></div>
+  </div>
+</section>
+
+<div class="glitch-divider"></div>
+
+<!-- FACTIONS -->
+<section id="factions" class="section-pad">
+  <div class="section-header" data-aos="fade-up">
+    <div class="section-label">Official Factions</div>
+    <h2 class="section-title">JOIN A <span>FACTION</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="factions-grid">
+    <div class="faction-card" data-aos="fade-up" data-aos-delay="100">
+      <div class="faction-icon"><i class="fas fa-shield-alt"></i></div>
+      <div class="faction-name">POLICE DEPARTMENT</div>
+      <div class="faction-desc">Serve and protect. Enforce the law and maintain order across San Andreas.</div>
+      <a href="#" onclick="openModal('faction');return false;" class="btn btn-primary" style="font-size:10px;padding:10px 20px;">JOIN NOW</a>
+    </div>
+    <div class="faction-card" data-aos="fade-up" data-aos-delay="200">
+      <div class="faction-icon"><i class="fas fa-ambulance"></i></div>
+      <div class="faction-name">EMERGENCY MEDICAL SERVICE</div>
+      <div class="faction-desc">Save lives on the frontlines and respond to emergencies across the city.</div>
+      <a href="#" onclick="openModal('faction');return false;" class="btn btn-primary" style="font-size:10px;padding:10px 20px;">JOIN NOW</a>
+    </div>
+    <div class="faction-card" data-aos="fade-up" data-aos-delay="300">
+      <div class="faction-icon"><i class="fas fa-microphone"></i></div>
+      <div class="faction-name">NEWS REPORTER</div>
+      <div class="faction-desc">Be the voice of the city. Report breaking news and shape public opinion.</div>
+      <a href="#" onclick="openModal('faction');return false;" class="btn btn-primary" style="font-size:10px;padding:10px 20px;">JOIN NOW</a>
+    </div>
+    <div class="faction-card" data-aos="fade-up" data-aos-delay="400">
+      <div class="faction-icon"><i class="fas fa-skull-crossbones"></i></div>
+      <div class="faction-name">MAFIA</div>
+      <div class="faction-desc">Rule the underworld. Control black markets and criminal enterprises.</div>
+      <a href="#" onclick="openModal('faction');return false;" class="btn btn-primary" style="font-size:10px;padding:10px 20px;">JOIN NOW</a>
+    </div>
+    <div class="faction-card" data-aos="fade-up" data-aos-delay="500">
+      <div class="faction-icon"><i class="fas fa-wrench"></i></div>
+      <div class="faction-name">MECHANIC</div>
+      <div class="faction-desc">Keep the city moving. Repair and customize vehicles across San Andreas.</div>
+      <a href="#" onclick="openModal('faction');return false;" class="btn btn-primary" style="font-size:10px;padding:10px 20px;">JOIN NOW</a>
+    </div>
+  </div>
+</section>
+
+<div class="glitch-divider"></div>
+
+<!-- GANG SYSTEM -->
+<section id="gangs" class="section-pad">
+  <div class="section-header" data-aos="fade-up">
+    <div class="section-label">Underground</div>
+    <h2 class="section-title">GANG <span>SYSTEM</span></h2>
+    <div class="section-line"></div>
+    <p class="section-desc">Control the streets. Build your empire. Dominate the underground world of San Andreas.</p>
+  </div>
+  <div class="gang-features">
+    <div class="gang-feat" data-aos="zoom-in" data-aos-delay="50"><i class="fas fa-fist-raised"></i>Gang Wars</div>
+    <div class="gang-feat" data-aos="zoom-in" data-aos-delay="100"><i class="fas fa-map"></i>Turf System</div>
+    <div class="gang-feat" data-aos="zoom-in" data-aos-delay="150"><i class="fas fa-pills"></i>Drug Business</div>
+    <div class="gang-feat" data-aos="zoom-in" data-aos-delay="200"><i class="fas fa-store"></i>Black Market</div>
+    <div class="gang-feat" data-aos="zoom-in" data-aos-delay="250"><i class="fas fa-mask"></i>Robberies</div>
+    <div class="gang-feat" data-aos="zoom-in" data-aos-delay="300"><i class="fas fa-home"></i>Gang Houses</div>
+  </div>
+  <div class="gang-offer" data-aos="fade-up">
+    <div class="gang-offer-title">🔥 EXCLUSIVE GANG LAUNCH OFFER</div>
+    <div class="gang-offer-sub">First 3 registered gangs receive a massive starter package:</div>
+    <div class="offer-items">
+      <span class="offer-item"><i class="fas fa-map-marker-alt" style="color:var(--blue2);margin-right:6px"></i>Free Custom Gang Mapping</span>
+      <span class="offer-item">🔫 20x M4</span>
+      <span class="offer-item">🔫 10x Deagle</span>
+      <span class="offer-item">💊 100x Crack</span>
+      <span class="offer-item">💎 100x Meth</span>
+      <span class="offer-item">🌿 100x Pot</span>
+    </div>
+    <p style="font-size:13px;color:#556677;margin-bottom:18px;"><strong style="color:var(--blue2)">How to Apply?</strong> Take whitelist and create a ticket in Discord.</p>
+    <a href="#" onclick="openModal('gang');return false;" class="btn btn-primary"><i class="fas fa-users"></i> APPLY FOR GANG</a>
+  </div>
+</section>
+
+<div class="glitch-divider"></div>
+
+<!-- MEDIA -->
+<section id="media" class="section-pad">
+  <div class="section-header" data-aos="fade-up">
+    <div class="section-label">Gallery</div>
+    <h2 class="section-title">SERVER <span>MEDIA</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item" data-aos="fade-up" data-aos-delay="100" onclick="openLightbox('https://cdn.discordapp.com/attachments/1431595155156373536/1504967342549893140/IMG_20260419_232852.jpg?ex=6a08e98f&is=6a07980f&hm=32ba2b5dad695022dca6026661ef75e42ec4d2872b34afb97982b9eaa9a690bd&')">
+      <img src="https://cdn.discordapp.com/attachments/1431595155156373536/1504967342549893140/IMG_20260419_232852.jpg?ex=6a08e98f&is=6a07980f&hm=32ba2b5dad695022dca6026661ef75e42ec4d2872b34afb97982b9eaa9a690bd&" alt="Gallery 1"/>
+      <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+    </div>
+    <div class="gallery-item" data-aos="fade-up" data-aos-delay="200" onclick="openLightbox('https://cdn.discordapp.com/attachments/1431595155156373536/1504967206847512737/IMG_2301.png?ex=6a08e96f&is=6a0797ef&hm=2fa84658d9f18cb7398ddcc2e3f785118973969a6428de9e1f9e5cfe1b81c4c1&')">
+      <img src="https://cdn.discordapp.com/attachments/1431595155156373536/1504967206847512737/IMG_2301.png?ex=6a08e96f&is=6a0797ef&hm=2fa84658d9f18cb7398ddcc2e3f785118973969a6428de9e1f9e5cfe1b81c4c1&" alt="Gallery 2"/>
+      <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+    </div>
+    <div class="gallery-item" data-aos="fade-up" data-aos-delay="300" onclick="openLightbox('https://cdn.discordapp.com/attachments/1431595155156373536/1504967207220678865/photo-output.jpg?ex=6a08e96f&is=6a0797ef&hm=e80fb13bbab6fa32160941cb609f05c20727d4ec7d0ad974575a3928815c6ee3&')">
+      <img src="https://cdn.discordapp.com/attachments/1431595155156373536/1504967207220678865/photo-output.jpg?ex=6a08e96f&is=6a0797ef&hm=e80fb13bbab6fa32160941cb609f05c20727d4ec7d0ad974575a3928815c6ee3&" alt="Gallery 3"/>
+      <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+    </div>
+    <div class="gallery-item" data-aos="fade-up" data-aos-delay="400" onclick="openLightbox('https://cdn.discordapp.com/attachments/1431595155156373536/1504967207719796817/IMG_2298.png?ex=6a08e96f&is=6a0797ef&hm=0d43150f4724e7995434a794463819ab782001990dafd9138ce10afc65ccb11e&')">
+      <img src="https://cdn.discordapp.com/attachments/1431595155156373536/1504967207719796817/IMG_2298.png?ex=6a08e96f&is=6a0797ef&hm=0d43150f4724e7995434a794463819ab782001990dafd9138ce10afc65ccb11e&" alt="Gallery 4"/>
+      <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="closeLightbox()">
+  <span id="lightbox-close">✕</span>
+  <img id="lightbox-img" src="" alt=""/>
+</div>
+
+<div class="glitch-divider"></div>
+
+<!-- STATUS -->
+<section id="status" class="section-pad">
+  <div class="section-header" data-aos="fade-up">
+    <div class="section-label">Live</div>
+    <h2 class="section-title">SERVER <span>STATUS</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="status-panel" data-aos="zoom-in">
+    <div class="status-dot"></div>
+    <div class="status-badge"><i class="fas fa-circle" style="font-size:9px"></i>&nbsp; ONLINE</div>
+    <h3 style="font-family:var(--font-head);font-size:18px;letter-spacing:2px;margin-bottom:10px;">MATRIX ROLEPLAY</h3>
+    <p style="font-family:var(--font-mono);font-size:12px;color:var(--blue2);margin-bottom:14px;">SA-MP — Coming Soon</p>
+    <p style="font-size:14px;color:#556677;">Server is active and ready. Join via Discord for connection details.</p>
+    <div style="margin-top:22px;padding-top:22px;border-top:1px solid rgba(255,255,255,0.04);display:grid;grid-template-columns:1fr 1fr;gap:14px;text-align:center;">
+      <div><div style="font-family:var(--font-head);font-size:18px;color:#00ff88;">24/7</div><div style="font-size:11px;color:#334455;margin-top:4px;font-family:var(--font-mono);">UPTIME</div></div>
+      <div><div style="font-family:var(--font-head);font-size:18px;color:#00ff88;">LOW</div><div style="font-size:11px;color:#334455;margin-top:4px;font-family:var(--font-mono);">PING</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="glitch-divider"></div>
+
+<!-- STORE -->
+<section id="store" class="section-pad">
+  <div class="section-header" data-aos="fade-up">
+    <div class="section-label">Donation</div>
+    <h2 class="section-title">PREMIUM <span>STORE</span></h2>
+    <div class="section-line"></div>
+    <p class="section-desc">Support the server and unlock exclusive perks, vehicles, and customizations.</p>
+  </div>
+  <div class="store-grid">
+    <div class="store-card" data-aos="fade-up" data-aos-delay="50"><div class="store-icon"><i class="fas fa-skating"></i></div><div class="store-name">SKATE BOARD</div><div class="store-price">₹199</div><a href="#" onclick="openModal('store');return false;" class="btn btn-primary" style="font-size:10px;padding:10px 18px;width:100%;justify-content:center;">BUY NOW</a></div>
+    <div class="store-card" data-aos="fade-up" data-aos-delay="100"><div class="store-icon"><i class="fas fa-music"></i></div><div class="store-name">BOOMBOX</div><div class="store-price">₹150</div><a href="#" onclick="openModal('store');return false;" class="btn btn-primary" style="font-size:10px;padding:10px 18px;width:100%;justify-content:center;">BUY NOW</a></div>
+    <div class="store-card" data-aos="fade-up" data-aos-delay="150"><div class="store-icon"><i class="fas fa-hashtag"></i></div><div class="store-name">FANCY NUMBERS</div><div class="store-price">From ₹29</div><a href="#" onclick="openModal('store');return false;" class="btn btn-primary" style="font-size:10px;padding:10px 18px;width:100%;justify-content:center;">BUY NOW</a></div>
+    <div class="store-card" data-aos="fade-up" data-aos-delay="200"><div class="store-icon"><i class="fas fa-box"></i></div><div class="store-name">BACKPACK</div><div class="store-price">From ₹80</div><a href="#" onclick="openModal('store');return false;" class="btn btn-primary" style="font-size:10px;padding:10px 18px;width:100%;justify-content:center;">BUY NOW</a></div>
+    <div class="store-card" data-aos="fade-up" data-aos-delay="250"><div class="store-icon"><i class="fas fa-home"></i></div><div class="store-name">HOUSE</div><div class="store-price">From ₹50</div><a href="#" onclick="openModal('store');return false;" class="btn btn-primary" style="font-size:10px;padding:10px 18px;width:100%;justify-content:center;">BUY NOW</a></div>
+    <div class="store-card" data-aos="fade-up" data-aos-delay="300"><div class="store-icon"><i class="fas fa-car"></i></div><div class="store-name">CARS</div><div class="store-price">From ₹70</div><a href="#" onclick="openModal('store');return false;" class="btn btn-primary" style="font-size:10px;padding:10px 18px;width:100%;justify-content:center;">BUY NOW</a></div>
+    <div class="store-card" data-aos="fade-up" data-aos-delay="350"><div class="store-icon"><i class="fas fa-store"></i></div><div class="store-name">BUSINESS</div><div class="store-price">From ₹40</div><a href="#" onclick="openModal('store');return false;" class="btn btn-primary" style="font-size:10px;padding:10px 18px;width:100%;justify-content:center;">BUY NOW</a></div>
+    <div class="store-card" data-aos="fade-up" data-aos-delay="400"><div class="store-icon"><i class="fas fa-cube"></i></div><div class="store-name">MAPPING (10 OBJ)</div><div class="store-price">₹2 / object</div><a href="#" onclick="openModal('store');return false;" class="btn btn-primary" style="font-size:10px;padding:10px 18px;width:100%;justify-content:center;">BUY NOW</a></div>
+    <div class="store-card" data-aos="fade-up" data-aos-delay="450"><div class="store-icon"><i class="fas fa-crown"></i></div><div class="store-name">VIP</div><div class="store-price">From ₹70</div><a href="#" onclick="openModal('store');return false;" class="btn btn-primary" style="font-size:10px;padding:10px 18px;width:100%;justify-content:center;">BUY NOW</a></div>
+  </div>
+</section>
+
+<div class="glitch-divider"></div>
+
+<!-- STAFF -->
+<section id="staff" class="section-pad">
+  <div class="section-header" data-aos="fade-up">
+    <div class="section-label">Team</div>
+    <h2 class="section-title">STAFF <span>TEAM</span></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <!-- Leadership -->
+  <div class="staff-grid">
+    <div class="staff-card" data-aos="fade-up" data-aos-delay="50">
+      <div class="staff-avatar">M</div>
+      <div class="staff-name">MALIK</div>
+      <div class="staff-role">FOUNDER</div>
+      <div class="staff-badge">@malik</div>
+    </div>
+    <div class="staff-card" data-aos="fade-up" data-aos-delay="100">
+      <div class="staff-avatar">S</div>
+      <div class="staff-name">SPIRAL</div>
+      <div class="staff-role">FOUNDER</div>
+      <div class="staff-badge">@spiral</div>
+    </div>
+    <div class="staff-card" data-aos="fade-up" data-aos-delay="150">
+      <div class="staff-avatar">Z</div>
+      <div class="staff-name">ZACK</div>
+      <div class="staff-role">DEVELOPER</div>
+      <div class="staff-badge">@zack</div>
+    </div>
+  </div>
+
+  <!-- MATRIX MC Group -->
+  <div class="group-card" data-aos="fade-up" data-aos-delay="200">
+    <div class="group-card-header">
+      <div class="group-icon"><i class="fas fa-users"></i></div>
+      <div>
+        <div class="group-title">TEAM MATRIX MC</div>
+        <div class="group-sub">Official Management Crew &nbsp;·&nbsp; 6 Members</div>
+      </div>
+    </div>
+    <div class="group-members">
+      <div class="group-member">
+        <div class="gm-avatar">W</div>
+        <div class="gm-name">WIXZ</div>
+        <div class="gm-tag">@wixz</div>
+      </div>
+      <div class="group-member">
+        <div class="gm-avatar">H</div>
+        <div class="gm-name">HAFIS</div>
+        <div class="gm-tag">@hafis</div>
+      </div>
+      <div class="group-member">
+        <div class="gm-avatar">D</div>
+        <div class="gm-name">NOT DRACO</div>
+        <div class="gm-tag">@notdraco</div>
+      </div>
+      <div class="group-member">
+        <div class="gm-avatar">S</div>
+        <div class="gm-name">STARK</div>
+        <div class="gm-tag">@stark</div>
+      </div>
+      <div class="group-member">
+        <div class="gm-avatar">A</div>
+        <div class="gm-name">ANSHAL</div>
+        <div class="gm-tag">@anshal</div>
+      </div>
+      <div class="group-member">
+        <div class="gm-avatar">P</div>
+        <div class="gm-name">PRINS</div>
+        <div class="gm-tag">@prins</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glitch-divider"></div>
+
+<!-- RULES -->
+<section id="rules" class="section-pad">
+  <div class="section-header" data-aos="fade-up">
+    <div class="section-label">Regulations</div>
+    <h2 class="section-title">SERVER <span>RULES</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="rules-categories">
+    <div class="accordion" data-aos="fade-up" data-aos-delay="50">
+      <div class="accordion-header" onclick="toggleAccordion(this)"><h3>GENERAL RULES</h3><i class="fas fa-chevron-down accordion-arrow"></i></div>
+      <div class="accordion-body"><ul><li>Respect all players and staff at all times.</li><li>No hacking, exploiting or unauthorized mods.</li><li>Do not spam chat or use offensive language.</li><li>Follow staff instructions at all times.</li><li>No advertising other servers.</li></ul></div>
+    </div>
+    <div class="accordion" data-aos="fade-up" data-aos-delay="100">
+      <div class="accordion-header" onclick="toggleAccordion(this)"><h3>ROLEPLAY RULES</h3><i class="fas fa-chevron-down accordion-arrow"></i></div>
+      <div class="accordion-body"><ul><li>Stay in character (IC) during roleplay at all times.</li><li>No powergaming or metagaming allowed.</li><li>Fear RP must be maintained in life-threatening situations.</li><li>Do not break character without /ooc notice.</li><li>Random Deathmatch (RDM) is strictly prohibited.</li></ul></div>
+    </div>
+    <div class="accordion" data-aos="fade-up" data-aos-delay="150">
+      <div class="accordion-header" onclick="toggleAccordion(this)"><h3>GANG RULES</h3><i class="fas fa-chevron-down accordion-arrow"></i></div>
+      <div class="accordion-body"><ul><li>Gang wars must be initiated via proper RP.</li><li>No drive-by without prior RP interaction.</li><li>Respect gang territory and boundaries.</li><li>No excessive killing in non-war zones.</li><li>Gang recruitment must follow guidelines.</li></ul></div>
+    </div>
+    <div class="accordion" data-aos="fade-up" data-aos-delay="200">
+      <div class="accordion-header" onclick="toggleAccordion(this)"><h3>FACTION RULES</h3><i class="fas fa-chevron-down accordion-arrow"></i></div>
+      <div class="accordion-body"><ul><li>Members must follow their faction SOP.</li><li>Abuse of faction powers results in punishment.</li><li>Corrupt RP must be approved by senior staff.</li><li>Faction vehicles are for official use only.</li><li>Log all major faction operations properly.</li></ul></div>
+    </div>
+    <div class="accordion" data-aos="fade-up" data-aos-delay="250">
+      <div class="accordion-header" onclick="toggleAccordion(this)"><h3>VOICE RULES</h3><i class="fas fa-chevron-down accordion-arrow"></i></div>
+      <div class="accordion-body"><ul><li>Use voice only in designated IC situations.</li><li>No mic spamming or playing music through voice.</li><li>Maintain appropriate volume levels.</li><li>No harassment via voice channels.</li></ul></div>
+    </div>
+    <div class="accordion" data-aos="fade-up" data-aos-delay="300">
+      <div class="accordion-header" onclick="toggleAccordion(this)"><h3>VEHICLE RULES</h3><i class="fas fa-chevron-down accordion-arrow"></i></div>
+      <div class="accordion-body"><ul><li>No vehicle deathmatch (VDM) under any circumstances.</li><li>Park vehicles properly in designated areas.</li><li>No stealing faction vehicles without RP reason.</li><li>Racing must be done in designated zones.</li></ul></div>
+    </div>
+    <div class="accordion" data-aos="fade-up" data-aos-delay="350">
+      <div class="accordion-header" onclick="toggleAccordion(this)"><h3>PUNISHMENT SYSTEM</h3><i class="fas fa-chevron-down accordion-arrow"></i></div>
+      <div class="accordion-body"><ul><li>1st offense: Verbal warning via admin PM.</li><li>2nd offense: Kick from server.</li><li>3rd offense: Temporary ban (1–7 days).</li><li>Severe violations: Permanent ban without warning.</li><li>Appeals submitted via Discord ticket.</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<div class="glitch-divider"></div>
+
+<!-- APPLY -->
+<section id="apply" class="section-pad">
+  <div class="section-header" data-aos="fade-up">
+    <div class="section-label">Applications</div>
+    <h2 class="section-title">APPLY <span>NOW</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="apply-grid">
+    <div class="apply-card" data-aos="fade-up" data-aos-delay="100">
+      <div class="apply-icon"><i class="fas fa-clipboard-check"></i></div>
+      <div class="apply-title">WHITELIST APPLY</div>
+      <div class="apply-desc">Get whitelisted to join MATRIX ROLEPLAY and start your journey in San Andreas.</div>
+      <a href="#" onclick="openModal('whitelist');return false;" class="btn btn-primary"><i class="fas fa-arrow-right"></i> HOW TO APPLY</a>
+    </div>
+    <div class="apply-card" data-aos="fade-up" data-aos-delay="200">
+      <div class="apply-icon"><i class="fas fa-user-shield"></i></div>
+      <div class="apply-title">STAFF APPLY</div>
+      <div class="apply-desc">Join our dedicated staff team and help shape the MATRIX ROLEPLAY community.</div>
+      <a href="#" onclick="openModal('staffapply');return false;" class="btn btn-primary"><i class="fas fa-arrow-right"></i> HOW TO APPLY</a>
+    </div>
+    <div class="apply-card" data-aos="fade-up" data-aos-delay="300">
+      <div class="apply-icon"><i class="fas fa-users"></i></div>
+      <div class="apply-title">GANG APPLY</div>
+      <div class="apply-desc">Register your gang and establish your presence in the criminal underworld.</div>
+      <a href="#" onclick="openModal('gang');return false;" class="btn btn-primary"><i class="fas fa-arrow-right"></i> HOW TO APPLY</a>
+    </div>
+    <div class="apply-card" data-aos="fade-up" data-aos-delay="400">
+      <div class="apply-icon"><i class="fas fa-id-badge"></i></div>
+      <div class="apply-title">FACTION APPLY</div>
+      <div class="apply-desc">Join an official faction and serve a greater purpose in San Andreas.</div>
+      <a href="#" onclick="openModal('faction');return false;" class="btn btn-primary"><i class="fas fa-arrow-right"></i> HOW TO APPLY</a>
+    </div>
+  </div>
+</section>
+
+<div class="glitch-divider"></div>
+
+<!-- CONTACT -->
+<section id="contact" class="section-pad">
+  <div class="section-header" data-aos="fade-up">
+    <div class="section-label">Get In Touch</div>
+    <h2 class="section-title">CONTACT <span>US</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info" data-aos="fade-right">
+      <h3>JOIN THE COMMUNITY</h3>
+      <p>Connect with players on our Discord server. Get help, stay updated, and be part of the MATRIX ROLEPLAY family.</p>
+      <div class="social-links">
+        <a href="https://discord.gg/uJ63XZR3X6" target="_blank" class="social-link"><i class="fab fa-discord"></i><span>discord.gg/uJ63XZR3X6</span></a>
+        <a href="https://www.instagram.com/dtrp.official?igsh=N3AxZGJvbWQzN3o3" target="_blank" class="social-link"><i class="fab fa-instagram"></i><span>@dtrp.official</span></a>
+      </div>
+    </div>
+    <div data-aos="fade-left" style="background:var(--glass2);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:40px;text-align:center;">
+      <img src="https://cdn.discordapp.com/attachments/1431595154736808011/1504944128935465142/IMG_2289.gif?ex=6a08d3f0&is=6a078270&hm=8944b350ab0fc233475d83b963496cb785e5fb9e37086db690abb675681b36bf&" alt="MXRP" style="width:90px;height:90px;border-radius:50%;border:2px solid var(--blue);margin-bottom:18px;box-shadow:0 0 24px var(--neon);"/>
+      <h3 style="font-family:var(--font-head);font-size:15px;letter-spacing:2px;margin-bottom:8px;">MATRIX ROLEPLAY</h3>
+      <p style="font-family:var(--font-mono);font-size:11px;color:var(--blue2);margin-bottom:22px;letter-spacing:2px;">SA-MP | COMING SOON</p>
+      <a href="https://discord.gg/uJ63XZR3X6" target="_blank" class="btn btn-primary" style="width:100%;justify-content:center;"><i class="fab fa-discord"></i> JOIN DISCORD NOW</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo-wrap">
+        <img src="https://cdn.discordapp.com/attachments/1431595154736808011/1504944128935465142/IMG_2289.gif?ex=6a08d3f0&is=6a078270&hm=8944b350ab0fc233475d83b963496cb785e5fb9e37086db690abb675681b36bf&" alt="MXRP"/>
+        <span>MATRIX RP</span>
+      </div>
+      <p>The next generation SA-MP Roleplay experience. Immersive, realistic, and community-driven dark gangster roleplay.</p>
+    </div>
+    <div class="footer-col">
+      <h4>NAVIGATE</h4>
+      <ul>
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#factions">Factions</a></li>
+        <li><a href="#gangs">Gangs</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>COMMUNITY</h4>
+      <ul>
+        <li><a href="#media">Media</a></li>
+        <li><a href="#store">Store</a></li>
+        <li><a href="#staff">Staff</a></li>
+        <li><a href="#rules">Rules</a></li>
+        <li><a href="#apply">Apply</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>CONNECT</h4>
+      <ul>
+        <li><a href="https://discord.gg/uJ63XZR3X6" target="_blank">Discord</a></li>
+        <li><a href="https://www.instagram.com/dtrp.official?igsh=N3AxZGJvbWQzN3o3" target="_blank">Instagram</a></li>
+        <li><a href="#status">Server Status</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 MATRIX ROLEPLAY — All rights reserved. Powered by <span style="color:var(--blue2)">MATRIX ROLEPLAY</span></p>
+    <div class="footer-socials">
+      <a href="https://discord.gg/uJ63XZR3X6" target="_blank"><i class="fab fa-discord"></i></a>
+      <a href="https://www.instagram.com/dtrp.official?igsh=N3AxZGJvbWQzN3o3" target="_blank"><i class="fab fa-instagram"></i></a>
+    </div>
+  </div>
+</footer>
+
+<!-- MODALS -->
+<div class="modal-overlay" id="modal-whitelist">
+  <div class="modal-box">
+    <span class="modal-close" onclick="closeModal('whitelist')">✕</span>
+    <div class="modal-icon"><i class="fas fa-clipboard-check"></i></div>
+    <div class="modal-title">HOW TO APPLY WHITELIST</div>
+    <div class="modal-steps">
+      <div class="modal-step"><div class="step-num">1</div><div class="step-text">Join the MATRIX RP Discord server.</div></div>
+      <div class="modal-step"><div class="step-num">2</div><div class="step-text">Read ALL rules in the #rules channel.</div></div>
+      <div class="modal-step"><div class="step-num">3</div><div class="step-text">Go to the <strong style="color:var(--blue2)">#whitelist</strong> channel.</div></div>
+      <div class="modal-step"><div class="step-num">4</div><div class="step-text">Click <strong style="color:var(--blue2)">Apply</strong> and type your answers.</div></div>
+      <div class="modal-step"><div class="step-num">5</div><div class="step-text">Submit and enjoy MATRIX RP!</div></div>
+    </div>
+    <a href="https://discord.gg/uJ63XZR3X6" target="_blank" class="btn btn-primary" style="width:100%;justify-content:center;"><i class="fab fa-discord"></i> JOIN DISCORD</a>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-staffapply">
+  <div class="modal-box">
+    <span class="modal-close" onclick="closeModal('staffapply')">✕</span>
+    <div class="modal-icon"><i class="fas fa-user-shield"></i></div>
+    <div class="modal-title">HOW TO APPLY STAFF</div>
+    <div class="modal-steps">
+      <div class="modal-step"><div class="step-num">1</div><div class="step-text">Join the MATRIX RP Discord server.</div></div>
+      <div class="modal-step"><div class="step-num">2</div><div class="step-text">Read ALL rules in the #rules channel.</div></div>
+      <div class="modal-step"><div class="step-num">3</div><div class="step-text">Go to the <strong style="color:var(--blue2)">#staff-apply</strong> channel.</div></div>
+      <div class="modal-step"><div class="step-num">4</div><div class="step-text">Click <strong style="color:var(--blue2)">Apply</strong> and fill in your details.</div></div>
+      <div class="modal-step"><div class="step-num">5</div><div class="step-text">Submit and wait for management response.</div></div>
+    </div>
+    <a href="https://discord.gg/uJ63XZR3X6" target="_blank" class="btn btn-primary" style="width:100%;justify-content:center;"><i class="fab fa-discord"></i> JOIN DISCORD</a>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-gang">
+  <div class="modal-box">
+    <span class="modal-close" onclick="closeModal('gang')">✕</span>
+    <div class="modal-icon"><i class="fas fa-users"></i></div>
+    <div class="modal-title">HOW TO APPLY GANG</div>
+    <div class="modal-steps">
+      <div class="modal-step"><div class="step-num">1</div><div class="step-text">Join the MATRIX RP Discord server.</div></div>
+      <div class="modal-step"><div class="step-num">2</div><div class="step-text">Read ALL rules in the #rules channel.</div></div>
+      <div class="modal-step"><div class="step-num">3</div><div class="step-text">Go to the <strong style="color:var(--blue2)">#gang-apply</strong> channel.</div></div>
+      <div class="modal-step"><div class="step-num">4</div><div class="step-text">Click <strong style="color:var(--blue2)">Apply</strong> and provide gang details.</div></div>
+      <div class="modal-step"><div class="step-num">5</div><div class="step-text">First 3 gangs get special starter rewards!</div></div>
+    </div>
+    <a href="https://discord.gg/uJ63XZR3X6" target="_blank" class="btn btn-primary" style="width:100%;justify-content:center;"><i class="fab fa-discord"></i> JOIN DISCORD</a>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-faction">
+  <div class="modal-box">
+    <span class="modal-close" onclick="closeModal('faction')">✕</span>
+    <div class="modal-icon"><i class="fas fa-id-badge"></i></div>
+    <div class="modal-title">HOW TO APPLY FACTION</div>
+    <div class="modal-steps">
+      <div class="modal-step"><div class="step-num">1</div><div class="step-text">Join the MATRIX RP Discord server.</div></div>
+      <div class="modal-step"><div class="step-num">2</div><div class="step-text">Read ALL rules in the #rules channel.</div></div>
+      <div class="modal-step"><div class="step-num">3</div><div class="step-text">Go to the <strong style="color:var(--blue2)">#faction-apply</strong> channel.</div></div>
+      <div class="modal-step"><div class="step-num">4</div><div class="step-text">Click <strong style="color:var(--blue2)">Apply</strong> and fill in the form.</div></div>
+      <div class="modal-step"><div class="step-num">5</div><div class="step-text">Wait for the faction leader to review.</div></div>
+    </div>
+    <a href="https://discord.gg/uJ63XZR3X6" target="_blank" class="btn btn-primary" style="width:100%;justify-content:center;"><i class="fab fa-discord"></i> JOIN DISCORD</a>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-store">
+  <div class="modal-box">
+    <span class="modal-close" onclick="closeModal('store')">✕</span>
+    <div class="modal-icon"><i class="fas fa-shopping-cart"></i></div>
+    <div class="modal-title">HOW TO BUY</div>
+    <div class="modal-steps">
+      <div class="modal-step"><div class="step-num">1</div><div class="step-text">Join the MATRIX RP Discord server.</div></div>
+      <div class="modal-step"><div class="step-num">2</div><div class="step-text">Create a <strong style="color:var(--blue2)">Premium Donater Ticket</strong>.</div></div>
+      <div class="modal-step"><div class="step-num">3</div><div class="step-text">Type <strong style="color:var(--blue2)">/payment</strong> — enter Product, Price & Validity.</div></div>
+      <div class="modal-step"><div class="step-num">4</div><div class="step-text">Receive a <strong style="color:var(--blue2)">QR Code</strong> and complete payment.</div></div>
+      <div class="modal-step"><div class="step-num">5</div><div class="step-text">Click <strong style="color:var(--blue2)">"I Will Pay"</strong> and enjoy your purchase!</div></div>
+    </div>
+    <a href="https://discord.gg/uJ63XZR3X6" target="_blank" class="btn btn-primary" style="width:100%;justify-content:center;"><i class="fab fa-discord"></i> GO TO DISCORD</a>
+  </div>
+</div>
+
+<!-- SCRIPTS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+AOS.init({duration:680,once:true,offset:55});
+
+// LOADER
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    document.getElementById('loader').classList.add('hide');
+    setTimeout(()=>document.getElementById('loader').remove(),800);
+  },2400);
+});
+
+// CURSOR
+const cur=document.getElementById('cursor');
+const ring=document.getElementById('cursor-ring');
+document.addEventListener('mousemove',e=>{
+  cur.style.left=e.clientX+'px';
+  cur.style.top=e.clientY+'px';
+  ring.style.left=e.clientX+'px';
+  ring.style.top=e.clientY+'px';
+});
+document.querySelectorAll('a,button,.btn,.accordion-header,.gallery-item,.store-card,.faction-card,.feat-card,.group-member,.staff-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ring.style.transform='translate(-50%,-50%) scale(1.6)';cur.style.transform='translate(-50%,-50%) scale(0.4)';});
+  el.addEventListener('mouseleave',()=>{ring.style.transform='translate(-50%,-50%) scale(1)';cur.style.transform='translate(-50%,-50%) scale(1)';});
+});
+
+// NAVBAR
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);
+});
+
+// MOBILE MENU
+function toggleMobile(){document.getElementById('mobileMenu').classList.toggle('open');}
+
+// TYPING ANIMATION
+const phrases=['Dark Gangster Roleplay','Immersive SA-MP Experience','Custom Mapping & Systems','Active Malayali Community'];
+let pi=0,ci=0,del=false;
+function typeLoop(){
+  const ph=phrases[pi];
+  document.getElementById('typing-text').textContent=del?ph.substring(0,ci--):ph.substring(0,ci++);
+  if(!del&&ci===ph.length+1){del=true;setTimeout(typeLoop,1200);return;}
+  if(del&&ci<0){del=false;pi=(pi+1)%phrases.length;}
+  setTimeout(typeLoop,del?48:88);
+}
+typeLoop();
+
+// COUNTERS
+function animCount(el){
+  const target=+el.dataset.target;
+  if(!target)return;
+  let c=0;
+  const inc=Math.ceil(target/60);
+  const t=setInterval(()=>{c+=inc;if(c>=target){c=target;clearInterval(t);}el.textContent=c+'+';},28);
+}
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){animCount(e.target);obs.unobserve(e.target);}});
+});
+document.querySelectorAll('[data-target]').forEach(el=>obs.observe(el));
+
+// ACCORDION
+function toggleAccordion(h){
+  const a=h.parentElement;
+  document.querySelectorAll('.accordion.open').forEach(x=>{if(x!==a)x.classList.remove('open');});
+  a.classList.toggle('open');
+}
+
+// MODALS
+function openModal(t){document.getElementById('modal-'+t).classList.add('open');}
+function closeModal(t){document.getElementById('modal-'+t).classList.remove('open');}
+document.querySelectorAll('.modal-overlay').forEach(m=>{
+  m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');});
+});
+
+// LIGHTBOX
+function openLightbox(src){
+  document.getElementById('lightbox-img').src=src;
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox(){document.getElementById('lightbox').classList.remove('open');}
+
+// PARTICLES
+(function(){
+  const canvas=document.getElementById('particles-canvas');
+  const ctx=canvas.getContext('2d');
+  let W,H,particles=[];
+  function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+  resize();
+  window.addEventListener('resize',resize);
+  function Particle(){
+    this.x=Math.random()*W;this.y=Math.random()*H;
+    this.vx=(Math.random()-0.5)*0.35;this.vy=(Math.random()-0.5)*0.35;
+    this.r=Math.random()*1.4+0.4;
+    this.alpha=Math.random()*0.3+0.06;
+    this.col=Math.random()>0.5?'0,119,255':'0,179,255';
+  }
+  for(let i=0;i<70;i++)particles.push(new Particle());
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    particles.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0||p.x>W)p.vx*=-1;
+      if(p.y<0||p.y>H)p.vy*=-1;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(${p.col},${p.alpha})`;ctx.fill();
+    });
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y;
+        const d=Math.sqrt(dx*dx+dy*dy);
+        if(d<120){
+          ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);
+          ctx.strokeStyle=`rgba(0,119,255,${0.07*(1-d/120)})`;ctx.lineWidth=0.5;ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+</body>
+</html>
